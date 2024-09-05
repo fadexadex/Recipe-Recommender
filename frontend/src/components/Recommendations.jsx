@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useLocation, useNavigate } from "react-router-dom";
 
 function Recommendations () {
@@ -14,19 +14,24 @@ function Recommendations () {
 			<h1 className="text-center">
 				MEAL RECOMMENDATIONS BASED ON YOUR PREFERENCES
 			</h1>
-      <div className="cards  flex flex-col gap-4">
-        {recipes.map((recipe, index) => (
-          <div key={index} className="card-title-tag flex justify-between" onClick={() => handleCardClick(recipe)}>
-            <div className="card-title-tag flex justify-between">
-								<h2 className="card-title font-bold">{recipe.dishName}</h2>
-								<p className="text-gray-300 text-[12px]">
-									#{recipe.hashtags}
-								</p>
-            </div>
-            <p className="text-gray-300 text-[12px]">{recipe.shortDescription}</p>
-          </div>))}
-        
-				
+			<div className="cards  flex flex-col gap-4">
+				{recipes.map((recipe, index) => (
+					<div
+						key={index}
+						className="card-body w-[80%] m-auto bg-white shadow-lg shadow-blue-200 p-4 rounded-lg"
+						onClick={() => handleCardClick(recipe)}
+					>
+						<div className="card-title-tag flex justify-between">
+							<h2 className="card-title font-bold">{recipe.dishName}</h2>
+							<p className="text-gray-300 text-[12px]">#{recipe.hashtags}</p>
+						</div>
+						<div>
+							<p className="text-gray-300 text-[12px]">
+								{recipe.shortDescription}
+							</p>
+						</div>
+					</div>
+				))}
 			</div>
 		</div>
 	);
