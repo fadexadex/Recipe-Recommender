@@ -12,9 +12,16 @@ function Navbar() {
 
 	return (
 		<nav className="p-2 md:px-16 border-b-[2px] border-gray-200  w-full">
-			<div className="flex justify-between p-4 m-auto  border-gray-200 lg:justify-start lg:gap-16">
+			<div className="flex justify-between p-4 m-auto  border-gray-200 ">
 				<div className="text-xl font-bold">
-					<Link to="/">Recipe Recommender</Link>
+					<Link to="/" className="flex items-center hover:text-[blue]">
+						{/* <img
+							src="logo.png"
+							alt="Logo"
+							className="h-8 mr-2"
+						/> */}
+						Recipe Recommender
+					</Link>
 				</div>
 				<div className="block lg:hidden">
 					<button onClick={toggleMenu} className="focus:outline-none">
@@ -25,15 +32,15 @@ function Navbar() {
 					</button>
 				</div>
 				<div className="hidden lg:flex space-x-8 items-center">
-					<a href="#" className="text-sm font-medium hover:text-[#2667FF]">
+					<Link to="/" className="text-sm font-medium hover:text-[blue]">
 						Home
-					</a>
-					<a href="#" className="text-sm font-medium hover:text-[#2667FF]">
+					</Link>
+					<Link to="/about" className="text-sm font-medium hover:text-[blue]">
 						About
-					</a>
-					<a href="#" className="text-sm font-medium hover:text-[#2667FF]">
+					</Link>
+					<Link to="/contact" className="text-sm font-medium hover:text-[blue]">
 						Contact
-					</a>
+					</Link>
 				</div>
 			</div>
 
@@ -55,15 +62,15 @@ function Navbar() {
 					</button>
 				</div>
 				<div className="flex flex-col space-y-4 p-4 items-center gap-8">
-					<a href="#" className="text-lg font-medium hover:text-[#2667FF]">
+					<Link to="/" className="text-sm font-medium hover:text-[blue]">
 						Home
-					</a>
-					<a href="#" className="text-lg font-medium hover:text-[#2667FF]">
+					</Link>
+					<Link to="/about" className="text-sm font-medium hover:text-[blue]">
 						About
-					</a>
-					<a href="#" className="text-lg font-medium hover:text-[#2667FF]">
+					</Link>
+					<Link to="/contact" className="text-sm font-medium hover:text-[blue]">
 						Contact
-					</a>
+					</Link>
 				</div>
 			</div>
 		</nav>
