@@ -1,33 +1,36 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
-function Recommendations () {
-  const location = useLocation();
-  const recipes = location.state?.recipes || [];
-  const navigate = useNavigate();
-  const handleCardClick = (recipe) => {
-    navigate(`/recipe/${recipe.dishName}`, { state: { recipe } });
-  };
- 
-  return (
-		<div className="mt-8">
-			<h1 className="text-center">
-				MEAL RECOMMENDATIONS BASED ON YOUR PREFERENCES
+function Recommendations() {
+	const location = useLocation();
+	const recipes = location.state?.recipes || [];
+	const navigate = useNavigate();
+
+	const handleCardClick = (recipe) => {
+		navigate(`/recipe/${recipe.dishName}`, { state: { recipe } });
+	};
+
+	return (
+		<div className="mt-8 min-h-screen p-8">
+			<h1 className="text-center text-4xl font-extrabold text-gray-800 mb-8 drop-shadow-lg">
+				Meal Recommendations Based On Your Preferences
 			</h1>
-			<div className="cards  flex flex-col gap-4">
+			<div className="cards grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
 				{recipes.map((recipe, index) => (
 					<div
 						key={index}
-						className="card-body w-[80%] m-auto bg-white shadow-lg shadow-blue-200 p-4 rounded-lg"
+						className="card-body bg-white hover:bg-blue-50 shadow-lg shadow-blue-200 p-6 rounded-lg transition-transform transform hover:scale-105 cursor-pointer hover:shadow-2xl"
 						onClick={() => handleCardClick(recipe)}
 					>
-						<div className="card-title-tag flex justify-between">
-							<h2 className="card-title font-bold">{recipe.dishName}</h2>
-							<p className="text-gray-300 text-[12px]">#{recipe.hashtags}</p>
+						<div className="card-title-tag flex flex-col justify-between mb-4">
+							<h2 className="card-title font-bold text-xl text-gray-800 drop-shadow-sm">
+								{recipe.dishName.replace(/\*/g, "")}
+							</h2>
+							<p className="text-gray-400 text-sm">#{recipe.hashtags}</p>
 						</div>
 						<div>
-							<p className="text-gray-300 text-[12px]">
-								{recipe.shortDescription}
+							<p className="text-gray-500">
+								{recipe.shortDescription.replace(/\*/g, "")}
 							</p>
 						</div>
 					</div>
@@ -37,4 +40,4 @@ function Recommendations () {
 	);
 }
 
-export default Recommendations
+export default Recommendations;

@@ -1,40 +1,50 @@
-import React, { useState, useEffect } from "react";
-import { useLocation } from 'react-router-dom';
+import React from "react";
+import { useLocation } from "react-router-dom";
 
 function CookingProcedure() {
-    const location = useLocation();
-    const recipe = location.state?.recipe;
+	const location = useLocation();
+	const recipe = location.state?.recipe;
 
 	return (
-		<div className="mt-8">
-			<div className="center text-center">
-				<h1 className="font-bold">{recipe.dishName}</h1>
-				<p>{recipe.shortDescription}</p>
+		<div className="mt-8 min-h-screen p-8">
+			<div className="center text-center mb-8">
+				<h1 className="font-extrabold text-4xl text-gray-800">
+					{recipe.dishName.replace(/\*/g, "")} {/* Remove asterisks */}
+				</h1>
+				<p className="text-gray-500 mt-2 text-lg">
+					{recipe.shortDescription.replace(/\*/g, "")} {/* Remove asterisks */}
+				</p>
 			</div>
-			<h2 className="text-center text-[1.2rem] font-bold">
+
+			<h2 className="text-center text-2xl font-bold text-gray-700 mb-4">
 				Required Ingredients
 			</h2>
-
-			<div className="card-body w-[80%] m-auto bg-white shadow-lg shadow-blue-200 p-4 rounded-lg">
-				<ul>
+			<div className="card-body w-[90%] m-auto bg-white shadow-lg shadow-blue-200 p-6 rounded-lg">
+				<ul className="list-disc list-inside text-gray-600 text-lg">
 					{recipe.ingredients.map((ingredient, index) => (
-						<li key={index}>{ingredient}</li>
+						<li key={index} className="mb-2">
+							{ingredient.replace(/\*/g, "")} {/* Remove asterisks */}
+						</li>
 					))}
 				</ul>
 			</div>
 
-			<div className="my-8">
-				<h2 className="text-center text-[1.2rem] font-bold">Cooking Steps</h2>
-				<div className="card-body w-[80%] m-auto bg-white shadow-lg shadow-blue-200 p-4 rounded-lg">
-					<ol>
+			<div className="my-12">
+				<h2 className="text-center text-2xl font-bold text-gray-700 mb-4">
+					Cooking Steps
+				</h2>
+				<div className="card-body w-[90%] m-auto bg-white shadow-lg shadow-purple-300 p-6 rounded-lg">
+					<ul className="list-inside text-gray-600 text-lg">
 						{recipe.steps.map((step, index) => (
-							<li key={index}>{step}</li>
+							<li key={index} className="mb-4">
+								{step.replace(/\*/g, "")} {/* Remove asterisks */}
+							</li>
 						))}
-					</ol>
+					</ul>
 				</div>
 			</div>
 		</div>
 	);
-};
+}
 
 export default CookingProcedure;
