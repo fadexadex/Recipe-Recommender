@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
 function Recommendations() {
@@ -26,7 +26,16 @@ function Recommendations() {
 							<h2 className="card-title font-bold text-xl text-gray-800 drop-shadow-sm">
 								{recipe.dishName.replace(/\*/g, "")}
 							</h2>
-							<p className="text-gray-400 text-sm">#{recipe.hashtags}</p>
+
+							<p className="text-gray-400 text-sm">
+								{Array.isArray(recipe.hashtags)
+									? recipe.hashtags.map((tag, i) => (
+											<span key={i}>#{tag} </span>
+									  ))
+									: recipe.hashtags
+											.split(/(?=[A-Z])/)
+											.map((tag, i) => <span key={i}>#{tag} </span>)}
+							</p>
 						</div>
 						<div>
 							<p className="text-gray-500">

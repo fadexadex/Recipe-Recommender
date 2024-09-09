@@ -40,7 +40,7 @@ function HeroSection() {
 		}, 5000);
 
 		return () => clearInterval(intervalId);
-	}, []);
+	}, [backgroundImages.length]);
 
 	const handleGenerate = async () => {
 		if (!ingredients) {
@@ -89,9 +89,6 @@ function HeroSection() {
 				backgroundPosition: "center",
 			}}
 		>
-			{/* Overlay */}
-			{/* <div className="absolute inset-0 bg-gradient-to-r from-blue-600 via-purple-600 to-pink-500 opacity-80"></div> */}
-
 			{/* Content */}
 			<div className="min-h-screen flex flex-col justify-center items-center text-center">
 				<div className="relative p-6 w-full max-w-lg">
