@@ -1,7 +1,7 @@
 import { GoogleGenerativeAI, GenerativeModel } from "@google/generative-ai";
 import { Request, Response, NextFunction } from "express";
 import { config } from "dotenv";
-import { AppError } from ".././middlewares/errorHandler";
+import { AppError } from "../middlewares/errorHandler";
 
 config();
 
@@ -82,10 +82,13 @@ class RecipeController {
     4. **Steps**: In-depth steps on how to prepare the dish.
 
     Begin each recommendation with three relevant hashtags. Please ensure each section is clearly labeled and separated by '###' to facilitate easy parsing and manipulation.
+    If the user input is insufficient to create a dish, you can create a default meal recommendation that is loved by many. 
+    Make sure to generate as much recommendations as possible.
 `;
 
       const result = await this.textModel.generateContent(prompt);
       const responseText = result.response.text();
+      console.log(responseText);
 
       if (!responseText) {
         throw new Error(
@@ -101,6 +104,38 @@ class RecipeController {
       next(error);
     }
   };
+
+  chat = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    try {
+      const { message, recipeContext } = req.body;
+      const { dishName, shortDescription, ingredients, steps } = recipeContext;
+
+      // Construct a prompt that includes the recipe context for the AI
+      const prompt = `
+        You are a professional chef. A user is currently preparing the following dish:
+
+        **Dish Name**: ${dishName}
+        **Description**: ${shortDescription}
+        **Ingredients**: ${ingredients.join(', ')}
+        **Steps**: ${steps.join('. ')}
+
+        The user asked: "${message}". 
+
+        Provide a detailed response based on the meal context.
+      `;
+
+      const result = await this.textModel.generateContent(prompt);
+      const responseText = result.response.text();
+
+      if (!responseText) {
+        throw new AppError("An error occurred with generating a response, Try Again", 500);
+      }
+
+      res.status(200).json({ response: responseText });
+    } catch (error) {
+      next(error);
+    }
+  }
 }
 
 export default RecipeController;
