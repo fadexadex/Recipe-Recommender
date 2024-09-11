@@ -7,6 +7,7 @@ import Recommendations from "./components/Recommendations";
 import CookingProcedure from "./components/CookingProcedure";
 import About from "./components/About";
 import Contact from "./components/Contact";
+import ChatHelper from "./components/ChatHelper";
 
 function App() {
 	return (
@@ -51,6 +52,14 @@ function App() {
 					element={
 						<>
 							<CookingProcedure />
+						</>
+					}
+				/>
+				<Route
+					path="/chat"
+					element={
+						<>
+							<ChatHelper />
 						</>
 					}
 				/>
