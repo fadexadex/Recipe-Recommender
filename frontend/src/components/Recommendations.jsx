@@ -45,6 +45,7 @@ function Recommendations() {
 					</div>
 				))}
 			</div>
+			
 		</div>
 	);
 }

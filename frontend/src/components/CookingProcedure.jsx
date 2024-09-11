@@ -1,5 +1,6 @@
 import React from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import ChatHelper from "../components/ChatHelper";
 
 function CookingProcedure() {
 	const location = useLocation();
@@ -51,6 +52,8 @@ function CookingProcedure() {
 					</ul>
 				</div>
 			</div>
+			<ChatHelper />
+
 		</div>
 	);
 }
