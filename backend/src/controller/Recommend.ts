@@ -2,6 +2,8 @@ import { GoogleGenerativeAI, GenerativeModel } from "@google/generative-ai";
 import { Request, Response, NextFunction } from "express";
 import { config } from "dotenv";
 import { AppError } from "../middlewares/errorHandler";
+import ImageGeneratorService from "../utils/ImageGeneration";
+import { RequestWithSocket } from "index";
 
 config();
 
@@ -15,14 +17,16 @@ config();
 class RecipeController {
   private readonly genAI: GoogleGenerativeAI;
   private readonly textModel: GenerativeModel;
+  private readonly ImageGenerator: ImageGeneratorService;
 
   constructor() {
     this.genAI = new GoogleGenerativeAI(process.env.GOOGLE_API_KEY);
+    this.ImageGenerator = new ImageGeneratorService();
     this.textModel = this.genAI.getGenerativeModel({
       model: "gemini-1.5-flash",
     });
   }
-  private parseRecipe(recipe: string) {
+  private async parseRecipe(recipe: string) {
     const sections = recipe.split("###").map((section) => section.trim());
     const [
       hashtags,
@@ -43,12 +47,19 @@ class RecipeController {
     );
     const steps = this.extractListContent(stepsSection.join(""), "Steps");
 
+    const dishUrl = await this.ImageGenerator.generateImage(
+      `generate a suitable image to represent a dish of the following details: ${dishName}, ${shortDescription}, ${ingredients.join(
+        ", "
+      )}, ${steps.join(", ")}`
+    );
+
     return {
       hashtags: hashtags.split(/\s+/).map((tag) => tag.replace("#", "").trim()),
       dishName,
       shortDescription,
       ingredients,
       steps,
+      dishUrl,
     };
   }
 
@@ -66,7 +77,7 @@ class RecipeController {
   }
 
   generateMeals = async (
-    req: Request,
+    req: RequestWithSocket,
     res: Response,
     next: NextFunction
   ): Promise<void> => {
@@ -82,13 +93,11 @@ class RecipeController {
     4. **Steps**: In-depth steps on how to prepare the dish.
 
     Begin each recommendation with three relevant hashtags. Please ensure each section is clearly labeled and separated by '###' to facilitate easy parsing and manipulation.
-    If the user input is insufficient to create a dish, you can create a default meal recommendation that is loved by many. 
-    Make sure to generate as much recommendations as possible.
+      Give a maximum of 4 recommendations, if a user inputs a nonsensical input, provide random recommendations.
 `;
 
       const result = await this.textModel.generateContent(prompt);
       const responseText = result.response.text();
-      console.log(responseText);
 
       if (!responseText) {
         throw new Error(
@@ -97,7 +106,14 @@ class RecipeController {
       }
 
       const recipes = responseText.split(/##\s+#/).filter(Boolean);
-      const parsedRecipes = recipes.map((recipe) => this.parseRecipe(recipe));
+      const parsedRecipes = await Promise.all(
+        recipes.map(async (recipe, index) => {
+          const parsedRecipe = await this.parseRecipe(recipe);
+          const progress = Math.round((index / recipes.length) * 100);
+          req.io?.emit("progress", progress);
+          return parsedRecipe;
+        })
+      );
 
       res.status(200).json({ response: parsedRecipes });
     } catch (error) {
@@ -105,7 +121,11 @@ class RecipeController {
     }
   };
 
-  chat = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+  chat = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): Promise<void> => {
     try {
       const { message, recipeContext } = req.body;
       const { dishName, shortDescription, ingredients, steps } = recipeContext;
@@ -116,8 +136,8 @@ class RecipeController {
 
         **Dish Name**: ${dishName}
         **Description**: ${shortDescription}
-        **Ingredients**: ${ingredients.join(', ')}
-        **Steps**: ${steps.join('. ')}
+        **Ingredients**: ${ingredients.join(", ")}
+        **Steps**: ${steps.join(". ")}
 
         The user asked: "${message}". 
 
@@ -128,14 +148,17 @@ class RecipeController {
       const responseText = result.response.text();
 
       if (!responseText) {
-        throw new AppError("An error occurred with generating a response, Try Again", 500);
+        throw new AppError(
+          "An error occurred with generating a response, Try Again",
+          500
+        );
       }
 
       res.status(200).json({ response: responseText });
     } catch (error) {
       next(error);
     }
-  }
+  };
 }
 
 export default RecipeController;
