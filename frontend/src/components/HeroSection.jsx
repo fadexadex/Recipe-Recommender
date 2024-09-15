@@ -16,6 +16,7 @@ function HeroSection() {
 	const [currentImageIndex, setCurrentImageIndex] = useState(0);
 	const [fade, setFade] = useState(true);
 	const [errorMessage, setErrorMessage] = useState("");
+	const [progress, setProgress] = useState(0); 
 	const navigate = useNavigate();
 
 	const backgroundImages = [
@@ -50,6 +51,18 @@ function HeroSection() {
 
 		setLoading(true);
 		setErrorMessage("");
+		setProgress(0); 
+
+		const simulateProgress = () => {
+			setProgress((prevProgress) => {
+				if (prevProgress >= 90) {
+					return prevProgress;
+				}
+				return prevProgress + 1;
+			});
+		};
+
+		const progressInterval = setInterval(simulateProgress, 100);
 
 		try {
 			const response = await fetch("http://localhost:4000/recommend-dishes", {
@@ -65,16 +78,22 @@ function HeroSection() {
 			const data = await response.json();
 
 			if (data.error) {
-				throw new Error(data.error); // Handle the backend error message
+				throw new Error(data.error); 
 			}
+
+			console.log("Received data:", data);
+
+			clearInterval(progressInterval);
+			setProgress(100); 
 
 			setTimeout(() => {
 				setLoading(false);
 				navigate("/recipes", { state: { recipes: data.response } });
-			}, 5000);
+			}, 500);
 		} catch (error) {
+			clearInterval(progressInterval);
 			setLoading(false);
-			setErrorMessage(error.message); // Set error message to display
+			setErrorMessage(error.message); 
 		}
 	};
 
@@ -149,6 +168,16 @@ function HeroSection() {
 						>
 							Generate Recipes
 						</button>
+
+						{/* Progress Bar */}
+						{loading && (
+							<div className="w-full bg-gray-200 h-2 mt-4">
+								<div
+									className="bg-blue-600 h-2"
+									style={{ width: `${progress}%` }}
+								></div>
+							</div>
+						)}
 					</div>
 				</div>
 			</div>
