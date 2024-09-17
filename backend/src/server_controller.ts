@@ -38,16 +38,6 @@ export class AppServer {
 
 		this.io.on("connection", (socket) => {
 			console.log("User connected");
-
-			// Emit 'progress' event with recipe data
-			socket.emit("progress", {
-				dishName: "Spaghetti Bolognese",
-				hashtags: ["Italian", "Pasta"],
-				dishUrl: "https://example.com/spaghetti.jpg",
-				shortDescription:
-					"A classic Italian pasta dish with a rich meat sauce.",
-			});
-
 			socket.on("disconnect", () => {
 				console.log("User disconnected");
 			});

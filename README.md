@@ -22,14 +22,41 @@ Recipe Recommender is a full-stack application that allows users to generate per
     ```
 
 3. **Set up environment variables**:
-    Create a `.env` file in the `backend` directory and add the necessary configurations (e.g., API keys, database connection strings).
+    Create a `.env` file in the `backend` directory and add the necessary configurations
 
-4. **Run the backend**:
+- **Google AI Studio API Key** (can be obtained from [Google AI Studio](https://aistudio.google.com/app/apikey))
+  ```bash
+  GOOGLE_API_KEY=<your_google_api_key>
+  ```
+- **Application port** 
+  ```bash
+  PORT=<your_preferred_port>
+  ```
+- **Clarifai Personal Access Token**(can be obtained from [Clarifai Account's Security section](https://clarifai.com/)) 
+  ```bash
+  PAT=<your_clarifai_pat>
+  ```
+- **Clarifai Image Generation Model Details**
+  ```bash
+  USER_ID=gcp
+  APP_ID=generate
+  MODEL_ID=Imagen
+  MODEL_VERSION_ID=8d5508722cc8444385af839b98fdf883
+  ```
+- Cloudinary Configuration (can be obtained from [Cloudinary Page](https://cloudinary.com/)
+  ```bash
+  CLOUDINARY_NAME=<your_cloudinary_name>
+  CLOUDINARY_API_KEY=<your_cloudinary_api_key>
+  CLOUDINARY_API_SECRET=<your_cloudinary_api_secret>
+  ```
+    
+
+5. **Run the backend**:
     ```bash
     npm start
     ```
 
-5. **Optional: Run using Docker**:
+6. **Optional: Run using Docker**:
     Ensure Docker is installed and run the following command:
     ```bash
     docker-compose up --build

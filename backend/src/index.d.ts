@@ -16,3 +16,18 @@ import { Server as SocketServer } from 'socket.io'
 export interface RequestWithSocket extends Request {
   io?: SocketServer;
 }
+export interface RequestWithFile extends Request {
+  fileValidationError?: string
+}
+export interface IRecipe {
+  hashtags: string[];
+  dishName: string;
+  shortDescription: string;
+  ingredients: string[];
+  steps: string[];
+  dishUrl?: string; // Optional property to include the dish URL
+}
+export interface ICookDetails {
+  ingredients: string[];
+  steps: string[];
+}

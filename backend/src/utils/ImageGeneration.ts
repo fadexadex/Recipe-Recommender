@@ -38,61 +38,63 @@ class ImageGeneratorService {
 		};
 	}
 
-	async generateImage(prompt: string) {
-		try {
-			const ImageResponse = new Promise((resolve, reject) => {
-				this.clarifaiModel.PostModelOutputs(
-					this.clarifaiImageModelConfig(prompt),
-					this.clarifaiMetadata,
-					async (err: any, response: any) => {
-						if (err) {
-							console.error("Clarifai API error:", err);
-							return reject(new AppError("Clarifai API error", 500));
-						}
-						if (response.status.code !== 10000) {
-							console.error("Clarifai API response error:", response.status);
-							console.error("Clarifai API response details:", response);
-							return reject(
-								new AppError(
-									`Clarifai API response error: ${response.status.description}`,
-									500
-								)
-							);
-						}
-						if (
-							!response.outputs ||
-							!response.outputs[0] ||
-							!response.outputs[0].data ||
-							!response.outputs[0].data.image
-						) {
-							console.error("Invalid response structure:", response);
-							return reject(
-								new AppError(
-									"Invalid response structure from Clarifai API",
-									500
-								)
-							);
-						}
-						const imageBuffer = response.outputs[0].data.image.base64;
-						try {
-							const imageUrl =
-								await this.cloudinaryService.uploadImageBufferToCloud(
-									Buffer.from(imageBuffer, "base64")
-								);
-							resolve(imageUrl);
-						} catch (uploadError) {
-							console.error("Cloudinary upload error:", uploadError);
-							reject(new AppError("Cloudinary upload error", 500));
-						}
-					}
-				);
-			});
-			return ImageResponse;
-		} catch (err) {
-			console.error("Error generating image:", err);
-			throw new AppError("Could not generate image", 500);
-		}
-	}
+ 
+  async generateImage(prompt: string): Promise<string> {
+    try {
+      const imageResponse = await new Promise<string>((resolve, reject) => {
+        this.clarifaiModel.PostModelOutputs(
+          this.clarifaiImageModelConfig(prompt),
+          this.clarifaiMetadata,
+          async (err: any, response: any) => {
+            if (err) {
+              console.error("Clarifai API error:", err);
+              return reject(new AppError("Clarifai API error", 500));
+            }
+            if (response.status.code !== 10000) {
+              console.error("Clarifai API response error:", response.status);
+              return reject(
+                new AppError(
+                  `Clarifai API response error: ${response.status.description}`,
+                  500
+                )
+              );
+            }
+            if (
+              !response.outputs ||
+              !response.outputs[0] ||
+              !response.outputs[0].data ||
+              !response.outputs[0].data.image ||
+              !response.outputs[0].data.image.base64
+            ) {
+              console.error("Invalid response structure:", response);
+              return reject(
+                new AppError(
+                  "Invalid response structure from Clarifai API",
+                  500
+                )
+              );
+            }
+            const imageBuffer = response.outputs[0].data.image.base64;
+            try {
+              const imageUrl =
+                await this.cloudinaryService.uploadImageBufferToCloud(
+                  Buffer.from(imageBuffer, "base64")
+                );
+              resolve(imageUrl);
+            } catch (uploadError) {
+              console.error("Cloudinary upload error:", uploadError);
+              reject(new AppError("Cloudinary upload error", 500));
+            }
+          }
+        );
+      });
+      return imageResponse;
+    } catch (err) {
+      console.error("Error generating image:", err);
+      throw new AppError("Could not generate image", 500);
+    }
+  }
+
 }
 
 export default ImageGeneratorService;
