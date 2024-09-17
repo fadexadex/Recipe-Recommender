@@ -27,3 +27,7 @@ export interface IRecipe {
   steps: string[];
   dishUrl?: string; // Optional property to include the dish URL
 }
+export interface ICookDetails {
+  ingredients: string[];
+  steps: string[];
+}

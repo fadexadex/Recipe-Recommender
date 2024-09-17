@@ -1,6 +1,6 @@
 import express from "express";
 const router = express.Router();
-import RecipeController from "./controller/Recommend";
+import RecipeController from "./controller/RecipeController";
 import uploadImage from "../src/utils/multer";
 import uploadErrorHandler from "../src/middlewares/uploadErrorHandler";
 
