@@ -41,6 +41,8 @@ class RecipeService {
     Output the recommendations in a JSON format for easy parsing and manipulation
     make it like so(it should be an array of objects):
 
+     Please format the output strictly as valid JSON, without any markdown or special characters.
+
     [{
             "hashtags": [
                 "YamFry",
@@ -73,7 +75,7 @@ class RecipeService {
       .text()
       .replace(/```json\s*|\s*```/g, "")
       .trim();
-      console.log(responseText)
+ 
     const recipes = JSON.parse(responseText);
 
     const finalRecipes = await Promise.all(
