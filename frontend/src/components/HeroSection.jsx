@@ -18,7 +18,7 @@ function HeroSection() {
 	const [errorMessage, setErrorMessage] = useState("");
 	const [progress, setProgress] = useState(0); 
 	const navigate = useNavigate();
-
+	
 	const backgroundImages = [
 		backgroundImage1,
 		backgroundImage2,

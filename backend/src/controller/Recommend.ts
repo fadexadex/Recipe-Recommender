@@ -23,7 +23,7 @@ class RecipeController {
     this.genAI = new GoogleGenerativeAI(process.env.GOOGLE_API_KEY);
     this.ImageGenerator = new ImageGeneratorService();
     this.textModel = this.genAI.getGenerativeModel({
-      model: "gemini-1.5-flash",
+      model: "gemini-1.5-pro",
     });
   }
   private async parseRecipe(recipe: string) {

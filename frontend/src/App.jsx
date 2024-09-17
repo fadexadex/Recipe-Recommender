@@ -8,6 +8,7 @@ import CookingProcedure from "./components/CookingProcedure";
 import About from "./components/About";
 import Contact from "./components/Contact";
 import ChatHelper from "./components/ChatHelper";
+import ImageCook from "./components/ImageCook"
 
 function App() {
 	return (
@@ -22,7 +23,7 @@ function App() {
 						</>
 					}
 				/>
-				,
+				
 				<Route
 					path="/about"
 					element={
@@ -36,6 +37,14 @@ function App() {
 					element={
 						<>
 							<Contact />
+						</>
+					}
+				/>
+				<Route
+					path="/imagecook"
+					element={
+						<>
+							<ImageCook />
 						</>
 					}
 				/>
@@ -60,6 +69,14 @@ function App() {
 					element={
 						<>
 							<ChatHelper />
+						</>
+					}
+				/>
+				<Route
+					path="/imagecook"
+					element={
+						<>
+							<ImageCook />
 						</>
 					}
 				/>
