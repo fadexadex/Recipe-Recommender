@@ -42,6 +42,12 @@ function Navbar() {
 					<Link to="/contact" className="text-sm font-medium hover:text-[blue]">
 						Contact
 					</Link>
+					<Link
+						to="/imagecook"
+						className="text-sm font-medium hover:text-[blue]"
+					>
+						ImageCook
+					</Link>
 				</div>
 			</div>
 
@@ -78,6 +84,9 @@ function Navbar() {
 					</Link>
 					<Link to="/contact" className="text font-medium hover:text-[blue]">
 						Contact
+					</Link>
+					<Link to="/imagecook" className="text font-medium hover:text-[blue]">
+						ImageCook
 					</Link>
 				</div>
 			</div>
