@@ -15,5 +15,8 @@ router.post(
 	uploadErrorHandler,
 	Recipe.cookPhoto
 );
+router.get('/', (req, res) => {
+	res.send('Welcome to the Recipe API');
+})	
 
 export default router;
