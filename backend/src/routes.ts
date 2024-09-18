@@ -10,10 +10,10 @@ router.post("/recommend-dishes", Recipe.generateMeals);
 router.post("/chat", Recipe.chat);
 router.get("/download-ingredient-list", Recipe.downloadIngredientList);
 router.post(
-  "/cook-photo",
-  uploadImage.single("image"),
-  uploadErrorHandler,
-  Recipe.cookPhoto
+	"/cook-photo",
+	uploadImage.single("image"),
+	uploadErrorHandler,
+	Recipe.cookPhoto
 );
 
 export default router;

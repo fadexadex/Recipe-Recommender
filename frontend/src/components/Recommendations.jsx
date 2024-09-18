@@ -47,7 +47,6 @@ function Recommendations() {
 				Meal Recommendations Based On Your Preferences
 			</h1>
 
-			{/* Progress Bar */}
 			{progress > 0 && progress < 100 && (
 				<div className="w-full bg-gray-200 rounded-full h-4 mb-8">
 					<div
@@ -57,7 +56,7 @@ function Recommendations() {
 				</div>
 			)}
 
-			<div className="cards grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+			<div className="cards grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 lg:w-[80%] lg:m-auto gap-8">
 				{recipes.length === 0 ? (
 					<p>No recommendations available.</p>
 				) : (

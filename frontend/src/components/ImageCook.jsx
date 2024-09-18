@@ -6,7 +6,7 @@ function ImageCook() {
 	const [imagePreview, setImagePreview] = useState(null);
 	const [loading, setLoading] = useState(false);
 	const [errorMessage, setErrorMessage] = useState("");
-	const [recipes, setRecipes] = useState(null);
+	const [recipe, setRecipe] = useState(null); 
 
 	const handleImageUpload = (event) => {
 		const file = event.target.files[0];
@@ -32,7 +32,7 @@ function ImageCook() {
 		formData.append("image", image);
 
 		try {
-			const response = await fetch("http://localhost:4000", {
+			const response = await fetch("http://localhost:4000/cook-photo", {
 				method: "POST",
 				body: formData,
 			});
@@ -42,18 +42,17 @@ function ImageCook() {
 			}
 
 			const data = await response.json();
+			console.log("Received data:", data); 
 
 			if (data.error) {
-				throw new Error(data.error); // Handle the backend error message
+				throw new Error(data.error); 
 			}
 
-			console.log("Received data:", data);
-
-			setRecipes(data.recipes);
+			setRecipe(data.response);
 			setLoading(false);
 		} catch (error) {
 			setLoading(false);
-			setErrorMessage(error.message); // Set error message to display
+			setErrorMessage(error.message);
 		}
 	};
 
@@ -107,22 +106,37 @@ function ImageCook() {
 				</div>
 			)}
 
-			{recipes && (
-				<div className="mt-8 w-full max-w-md p-6 bg-white rounded-lg shadow-md">
-					<h3 className="text-xl font-bold mb-4">
-						Cooking Steps and Ingredients
-					</h3>
-					{recipes.map((recipe, index) => (
-						<div key={index} className="mb-4">
-							<h4 className="text-lg font-semibold">{recipe.name}</h4>
-							<p className="text-sm text-gray-700">
-								Ingredients: {recipe.ingredients.join(", ")}
-							</p>
-							<p className="text-sm text-gray-700">
-								Steps: {recipe.steps.join(", ")}
-							</p>
+			{recipe && (
+				<div className="min-h-screen  p-8">
+					<div className="my-12">
+						<h2 className="text-center text-2xl font-bold text-gray-700 mb-4">
+							Ingredients
+						</h2>
+						<div className="card-body w-[90%] m-auto bg-white shadow-lg shadow-blue-200 p-6 rounded-lg">
+							<ul className="list-disc list-inside text-gray-600 text-lg">
+								{recipe.ingredients.map((ingredient, index) => (
+									<li key={index} className="mb-2">
+										{ingredient.replace(/\*/g, "")}
+									</li>
+								))}
+							</ul>
 						</div>
-					))}
+					</div>
+
+					<div className="my-12">
+						<h2 className="text-center text-2xl font-bold text-gray-700 mb-4">
+							Cooking Steps
+						</h2>
+						<div className="card-body w-[90%] m-auto bg-white shadow-lg shadow-purple-300 p-6 rounded-lg">
+							<ul className="list-inside text-gray-600 text-lg">
+								{recipe.steps.map((step, index) => (
+									<li key={index} className="mb-4">
+										{step.replace(/\*/g, "")}
+									</li>
+								))}
+							</ul>
+						</div>
+					</div>
 				</div>
 			)}
 		</div>

@@ -86,7 +86,7 @@ function Navbar() {
 						Contact
 					</Link>
 					<Link to="/imagecook" className="text font-medium hover:text-[blue]">
-						Imagecook
+						ImageCook
 					</Link>
 				</div>
 			</div>
