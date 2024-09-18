@@ -71,6 +71,8 @@ class FileService {
     const cookingDetails = JSON.parse(responseText);
     fs.unlinkSync(file.path);
 
+    console.log(cookingDetails);
+
     if (!responseText) {
       throw new AppError(
         "An error occurred with generating a response, Try Again",
