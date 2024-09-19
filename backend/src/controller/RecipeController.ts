@@ -20,7 +20,7 @@ class RecipeController {
   constructor() {
     this.genAI = new GoogleGenerativeAI(process.env.GOOGLE_API_KEY);
     this.Model = this.genAI.getGenerativeModel({
-      model: "gemini-1.5-pro",
+      model: "gemini-1.5-flash",
     });
     this.recipeService = new RecipeService(this.Model);
     this.chatService = new ChatService(this.Model);
@@ -118,6 +118,8 @@ class RecipeController {
 
       return res.status(200).json({ response: cookingDetails });
     } catch (error) {
+      fs.unlinkSync(req.file.path);
+      console.error(error.message);
       next(error);
     }
   };

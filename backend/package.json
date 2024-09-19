@@ -4,7 +4,11 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon",
+    "build": "npm run compile && npm run copy-public",
+    "compile": "tsc",
+    "start": "node dist/server.js",
+    "copy-public": "copyfiles -u 1 src/public/**/* dist/",
+    "dev": "nodemon",
     "type": "module"
   },
   "keywords": [],
@@ -19,7 +23,6 @@
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
-    "mongoose": "^8.5.1",
     "multer": "^1.4.5-lts.1",
     "socket.io": "^4.7.5",
     "streamifier": "^0.1.1",
@@ -29,6 +32,7 @@
   "devDependencies": {
     "@types/cors": "^2.8.17",
     "@types/multer": "^1.4.12",
-    "@types/streamifier": "^0.1.2"
+    "@types/streamifier": "^0.1.2",
+    "copyfiles": "^2.4.1"
   }
 }

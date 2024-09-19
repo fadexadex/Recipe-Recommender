@@ -10,13 +10,18 @@ class FileService {
     this.Model = model;
   }
 
-  async downloadIngredientList(ingredients: string): Promise<string> {
+  async downloadIngredientList(ingredients: string[]): Promise<string> {
     if (!ingredients) {
       throw new AppError("No ingredients provided", 400);
     }
 
     const filePath = path.join(__dirname, "ingredients.txt");
-    await fs.promises.writeFile(filePath, ingredients);
+    const formattedIngredients = ingredients
+      .map((ingredient, index) => `${index + 1}. ${ingredient}`)
+      .join("\n");
+
+    const ingredientsList = `Ingredients\n${formattedIngredients}`;
+    await fs.promises.writeFile(filePath, ingredientsList);
     return filePath;
   }
 
