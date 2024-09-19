@@ -23,12 +23,10 @@ Recipe Recommender is designed to address these common cooking challenges by lev
 - **Cloudinary**: For image storage and optimization, ensuring fast and reliable delivery of image assets.
 - **Express.js**: A backend framework used to create RESTful APIs that manage recipe data, ingredient lists, and user inputs.
 - **Socket.IO**: Enables real-time communication of the backend with the front-end to display progress with recommendation generation.
-- **Vercel**: Used for deploying the frontend.
-- **Railway**: Used for deploying the backend.
 
 **Deployed URL** - [Recipe Recommender](https://recipe-recommender-ai.vercel.app)
 
-[Watch the video walkthrough](https://www.loom.com/share/847bbcbf78834934b0660caa93eb46e3?sid=76b05568-d090-49ed-bcd0-355d1e8d40ce)
+**Video Demo** - [Watch the video walkthrough](https://www.loom.com/share/847bbcbf78834934b0660caa93eb46e3?sid=76b05568-d090-49ed-bcd0-355d1e8d40ce)
 
 ## Running it on your machine
 
