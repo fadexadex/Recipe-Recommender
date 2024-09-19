@@ -25,7 +25,6 @@ Recipe Recommender is designed to address these common cooking challenges by lev
 - **Socket.IO**: Enables real-time communication of the backend with the front-end to display progress with recommendation generation.
 - **Vercel**: Used for deploying the frontend.
 - **Railway**: Used for deploying the backend.
-- **GitHub**: For version control and collaboration between developers, ensuring code integrity and tracking progress.
 
 **Deployed URL** - [Recipe Recommender](https://recipe-recommender-ai.vercel.app)
 
