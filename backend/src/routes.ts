@@ -8,7 +8,7 @@ const Recipe = new RecipeController();
 
 router.post("/recommend-dishes", Recipe.generateMeals);
 router.post("/chat", Recipe.chat);
-router.get("/download-ingredient-list", Recipe.downloadIngredientList);
+router.post("/download-ingredient-list", Recipe.downloadIngredientList);
 router.post(
 	"/cook-photo",
 	uploadImage.single("image"),

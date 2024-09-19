@@ -32,10 +32,13 @@ function ImageCook() {
 		formData.append("image", image);
 
 		try {
-			const response = await fetch("http://localhost:4000/cook-photo", {
-				method: "POST",
-				body: formData,
-			});
+			const response = await fetch(
+				"https://recipe-recommender-production.up.railway.app/cook-photo",
+				{
+					method: "POST",
+					body: formData,
+				}
+			);
 
 			if (!response.ok) {
 				throw new Error("Failed to upload image. Please try again.");
