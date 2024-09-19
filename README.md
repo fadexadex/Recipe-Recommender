@@ -6,7 +6,7 @@ One of the biggest challenges people face in the kitchen is deciding what to coo
 ### How Recipe Recommender Solves This
 Recipe Recommender is designed to address these common cooking challenges by leveraging the power of the Gemini 1.5 Pro AI model to generate personalized recipes based on the user's inputs. It simplifies meal planning, helps users discover new meal ideas, and provides clear, step-by-step cooking instructions.
 
-- **Personalized Meal Suggestions**: Recipe Recommender allows users to input their available ingredients and any dietary restrictions they might have. The app then generates tailored meal ideas that suit these inputs, helping users utilize what they already have while maintaining their dietary preferences.
+- **Personalized Meal Suggestions**: Recipe Recommender allows users to input their available ingredients and any dietary restrictions they might have. The app then generates tailored meal ideas aided with images, that suit these inputs, helping users utilize what they already have while maintaining their dietary preferences.
 
 - **Ingredient List Generation**: The app allows users to download the list of ingredients for any recipe they choose. This makes it easy to shop for ingredients or plan meals without needing to manually copy down the information.
 
@@ -14,7 +14,20 @@ Recipe Recommender is designed to address these common cooking challenges by lev
 
 - **Interactive Chat**: With the AI-powered chat feature, users can ask questions about their chosen recipe, such as ingredient substitutions, nutritional information, or additional cooking tips. This ensures a more personalized cooking experience by offering on-the-spot support as users prepare their meals.
 
-Deployed URL - [Recipe Recommender](https://recipe-recommender-ai.vercel.app)
+### Technologies Used
+
+- **Node.js**: Used for building the backend API to handle requests, process user inputs, and communicate with the AI model.
+- **React**: The frontend framework used to build the user interface, providing an interactive and responsive experience for users.
+- **Gemini 1.5 Pro AI**: Used for generating personalized recipe suggestions based on user inputs like ingredients, dietary restrictions, and images.
+- **Clarifai API**: Used to communicate with the **Imagen** image generation model to generate images for recommended dishes.
+- **Cloudinary**: For image storage and optimization, ensuring fast and reliable delivery of image assets.
+- **Express.js**: A backend framework used to create RESTful APIs that manage recipe data, ingredient lists, and user inputs.
+- **Socket.IO**: Enables real-time communication of the backend with the front-end to display progress with recommendation generation.
+- **Vercel**: Used for deploying the frontend.
+- **Railway**: Used for deploying the backend.
+- **GitHub**: For version control and collaboration between developers, ensuring code integrity and tracking progress.
+
+**Deployed URL** - [Recipe Recommender](https://recipe-recommender-ai.vercel.app)
 
 ## Running it on your machine
 
@@ -38,10 +51,6 @@ Deployed URL - [Recipe Recommender](https://recipe-recommender-ai.vercel.app)
     ```
 
 4. The application will be available at `http://localhost:3000`.
-
-## Project Structure
-- **Backend**: Handles API requests, communicates with AI models, and serves data.
-- **Frontend**: React app where users input preferences and view generated recipes.
 
 
 ## Authors
