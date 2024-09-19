@@ -9,7 +9,7 @@ function ChatHelper() {
 	const [messages, setMessages] = useState([]);
 	const [input, setInput] = useState("");
 	const [isChatOpen, setIsChatOpen] = useState(false);
-	const [isLoading, setIsLoading] = useState(false); 
+	const [isLoading, setIsLoading] = useState(false);
 	const chatRef = useRef(null);
 
 	useEffect(() => {
@@ -32,27 +32,43 @@ function ChatHelper() {
 	const sendMessage = async () => {
 		if (!input) return;
 
-		setIsLoading(true); 
+		setIsLoading(true);
 
 		const userMessage = { message: input, recipeContext: recipe };
-		const response = await fetch("http://localhost:4000/chat", {
-			method: "POST",
-			headers: { "Content-Type": "application/json" },
-			body: JSON.stringify(userMessage),
-		});
-		const data = await response.json();
+		try {
+			const response = await fetch(
+				"https://recipe-recommender-production.up.railway.app/chat",
+				{
+					method: "POST",
+					headers: { "Content-Type": "application/json" },
+					body: JSON.stringify(userMessage),
+				}
+			);
+			const data = await response.json();
 
-		const botMessage = data.response
-			? formatMessage(data.response)
-			: "No response from server";
+			const botMessage = data.response
+				? formatMessage(data.response)
+				: "No response from server";
 
-		setMessages([
-			...messages,
-			{ sender: "user", text: input },
-			{ sender: "bot", text: botMessage },
-		]);
-		setInput("");
-		setIsLoading(false);
+			setMessages([
+				...messages,
+				{ sender: "user", text: input },
+				{ sender: "bot", text: botMessage, isError: !data.response },
+			]);
+		} catch (error) {
+			setMessages([
+				...messages,
+				{ sender: "user", text: input },
+				{
+					sender: "bot",
+					text: "Failed to send message. Please try again.",
+					isError: true,
+				},
+			]);
+		} finally {
+			setInput("");
+			setIsLoading(false);
+		}
 	};
 
 	const formatMessage = (text) => {
@@ -104,6 +120,8 @@ function ChatHelper() {
 									className={`p-2 m-2 rounded-md ${
 										msg.sender === "user"
 											? "bg-blue-500 text-white w-3/4 text-left"
+											: msg.isError
+											? "bg-red-500 text-white w-3/4 text-left"
 											: "bg-gray-300 text-black w-3/4 text-left"
 									}`}
 								>

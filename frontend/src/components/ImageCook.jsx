@@ -32,10 +32,13 @@ function ImageCook() {
 		formData.append("image", image);
 
 		try {
-			const response = await fetch("http://localhost:4000/cook-photo", {
-				method: "POST",
-				body: formData,
-			});
+			const response = await fetch(
+				"https://recipe-recommender-production.up.railway.app/cook-photo",
+				{
+					method: "POST",
+					body: formData,
+				}
+			);
 
 			if (!response.ok) {
 				throw new Error("Failed to upload image. Please try again.");
@@ -53,6 +56,40 @@ function ImageCook() {
 		} catch (error) {
 			setLoading(false);
 			setErrorMessage(error.message);
+		}
+	};
+
+	const downloadIngredients = async () => {
+		try {
+			setIsLoading(true);
+			const url = `https://recipe-recommender-production.up.railway.app/download-ingredient-list`;
+			console.log("Fetching URL:", url);
+
+			const response = await fetch(url, {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify({ ingredients: recipe.ingredients }),
+			});
+
+			if (!response.ok) {
+				console.error("Response status:", response.status);
+				throw new Error("Network response was not ok");
+			}
+
+			const blob = await response.blob();
+			const downloadUrl = window.URL.createObjectURL(blob);
+			const link = document.createElement("a");
+			link.href = downloadUrl;
+			link.setAttribute("download", "ingredients.txt");
+			document.body.appendChild(link);
+			link.click();
+			link.remove();
+		} catch (error) {
+			console.error("Error downloading the ingredients list:", error);
+		} finally {
+			setIsLoading(false);
 		}
 	};
 
@@ -112,7 +149,14 @@ function ImageCook() {
 						<h2 className="text-center text-2xl font-bold text-gray-700 mb-4">
 							Ingredients
 						</h2>
-						<div className="card-body w-[90%] m-auto bg-white shadow-lg shadow-blue-200 p-6 rounded-lg">
+						<div className="card-body w-[95%] m-auto bg-white shadow-lg shadow-blue-200 p-6 rounded-lg">
+							<button
+								onClick={downloadIngredients}
+								className="absolute top-4 right-4 bg-blue-500 text-white p-2 rounded-md"
+								disabled={isLoading}
+							>
+								<AiOutlineDownload size={24} />
+							</button>
 							<ul className="list-disc list-inside text-gray-600 text-lg">
 								{recipe.ingredients.map((ingredient, index) => (
 									<li key={index} className="mb-2">
@@ -127,7 +171,7 @@ function ImageCook() {
 						<h2 className="text-center text-2xl font-bold text-gray-700 mb-4">
 							Cooking Steps
 						</h2>
-						<div className="card-body w-[90%] m-auto bg-white shadow-lg shadow-purple-300 p-6 rounded-lg">
+						<div className="card-body w-[95%] m-auto bg-white shadow-lg shadow-purple-300 p-6 rounded-lg">
 							<ul className="list-inside text-gray-600 text-lg">
 								{recipe.steps.map((step, index) => (
 									<li key={index} className="mb-4">
