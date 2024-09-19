@@ -1,13 +1,13 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGithub, faLinkedin } from "@fortawesome/free-brands-svg-icons";
-import backgroundImage1 from "../images/frontend-dev.jpg";
-import backgroundImage2 from "../images/backend-dev.jpg";
+import Image1 from "../images/frontend-dev.jpg";
+import Image2 from "../images/backend-dev.jpg";
 
 const developers = [
 	{
 		name: "Taiwo Ayomide",
-		image: backgroundImage1,
+		image: Image1,
 		role: "Frontend Developer",
 		github: "https://github.com/dev-ayomide",
 		linkedin: "https://linkedin.com/in/taiwoayomide",
@@ -15,7 +15,7 @@ const developers = [
 
 	{
 		name: "Fadehan Daniel",
-		image: backgroundImage2,
+		image: Image2,
 		role: "Backend Developer",
 		github: "https://github.com/fadexadex",
 		linkedin: "https://linkedin.com/in/danielfadehan",

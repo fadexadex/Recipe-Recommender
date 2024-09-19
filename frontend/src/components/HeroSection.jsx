@@ -65,11 +65,14 @@ function HeroSection() {
 		const progressInterval = setInterval(simulateProgress, 100);
 
 		try {
-			const response = await fetch("http://localhost:4000/recommend-dishes", {
-				method: "POST",
-				headers: { "Content-Type": "application/json" },
-				body: JSON.stringify({ ingredients, allergies }),
-			});
+			const response = await fetch(
+				"https://recipe-recommender-production.up.railway.app/recommend-dishes",
+				{
+					method: "POST",
+					headers: { "Content-Type": "application/json" },
+					body: JSON.stringify({ ingredients, allergies }),
+				}
+			);
 
 			if (!response.ok) {
 				throw new Error("Failed to fetch recipes. Please try again.");
