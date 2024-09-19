@@ -64,7 +64,7 @@ function CookingProcedure() {
 			<h2 className="text-center text-2xl font-bold text-gray-700 mb-4">
 				Required Ingredients
 			</h2>
-			<div className="card-body w-[90%] m-auto bg-white shadow-lg shadow-blue-200 p-6 rounded-lg relative">
+			<div className="card-body w-[95%] m-auto bg-white shadow-lg shadow-blue-200 p-6 rounded-lg relative">
 				<button
 					onClick={downloadIngredients}
 					className="absolute top-4 right-4 bg-blue-500 text-white p-2 rounded-md"
@@ -85,7 +85,7 @@ function CookingProcedure() {
 				<h2 className="text-center text-2xl font-bold text-gray-700 mb-4">
 					Cooking Steps
 				</h2>
-				<div className="card-body w-[90%] m-auto bg-white shadow-lg shadow-purple-300 p-6 rounded-lg">
+				<div className="card-body w-[95%] m-auto bg-white shadow-lg shadow-purple-300 p-6 rounded-lg">
 					<ul className="list-inside text-gray-600 text-lg">
 						{recipe.steps.map((step, index) => (
 							<li key={index} className="mb-4">
