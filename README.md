@@ -28,6 +28,8 @@ Recipe Recommender is designed to address these common cooking challenges by lev
 
 **Deployed URL** - [Recipe Recommender](https://recipe-recommender-ai.vercel.app)
 
+[Watch the video walkthrough](https://www.loom.com/share/847bbcbf78834934b0660caa93eb46e3?sid=76b05568-d090-49ed-bcd0-355d1e8d40ce)
+
 ## Running it on your machine
 
 ### Prerequisites
