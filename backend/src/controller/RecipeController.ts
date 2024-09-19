@@ -20,7 +20,7 @@ class RecipeController {
   constructor() {
     this.genAI = new GoogleGenerativeAI(process.env.GOOGLE_API_KEY);
     this.Model = this.genAI.getGenerativeModel({
-      model: "gemini-1.5-flash",
+      model: "gemini-1.5-pro",
     });
     this.recipeService = new RecipeService(this.Model);
     this.chatService = new ChatService(this.Model);
